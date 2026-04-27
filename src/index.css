@@ -4,70 +4,75 @@
 @tailwind components;
 @tailwind utilities;
 
-/* Receipt Vault — Premium SaaS design system */
+/* Receipt Vault - Premium SaaS design system */
 
 @layer base {
   :root {
+    --bg: #ffffff;
+    --card-surface: #f9fafb;
+    --primary-brand: #f59e0b;
+    --ai-accent: #14b8a6;
+    --text-main: #111827;
+    --text-secondary: #a8a29e;
+    --border-base: #e5e7eb;
+
     --background: 0 0% 100%;
-    --foreground: 222 47% 11%;
+    --foreground: 221 39% 11%;
 
-    --card: 0 0% 100%;
-    --card-foreground: 222 47% 11%;
+    --card: 210 20% 98%;
+    --card-foreground: 221 39% 11%;
 
-    --popover: 0 0% 100%;
-    --popover-foreground: 222 47% 11%;
+    --popover: 210 20% 98%;
+    --popover-foreground: 221 39% 11%;
 
-    /* Brand: deep indigo-blue */
-    --primary: 230 85% 56%;
+    --primary: 38 92% 50%;
     --primary-foreground: 0 0% 100%;
-    --primary-glow: 240 100% 70%;
+    --primary-glow: 38 92% 56%;
 
-    --secondary: 220 30% 96%;
-    --secondary-foreground: 222 47% 11%;
+    --secondary: 210 20% 95%;
+    --secondary-foreground: 221 39% 11%;
 
-    --muted: 220 20% 96%;
-    --muted-foreground: 220 10% 45%;
+    --muted: 210 20% 95%;
+    --muted-foreground: 24 5% 64%;
 
-    --accent: 230 100% 97%;
-    --accent-foreground: 230 85% 30%;
+    --accent: 173 80% 40%;
+    --accent-foreground: 0 0% 100%;
 
-    /* Semantic finance colors */
-    --success: 152 70% 40%;
+    --success: 173 80% 40%;
     --success-foreground: 0 0% 100%;
-    --success-soft: 152 70% 95%;
+    --success-soft: 173 70% 92%;
 
-    --warning: 38 95% 55%;
-    --warning-foreground: 30 50% 15%;
-    --warning-soft: 38 95% 95%;
+    --warning: 38 92% 50%;
+    --warning-foreground: 0 0% 100%;
+    --warning-soft: 40 100% 94%;
 
     --destructive: 0 75% 58%;
     --destructive-foreground: 0 0% 100%;
     --destructive-soft: 0 75% 96%;
 
-    --border: 220 20% 92%;
-    --input: 220 20% 92%;
-    --ring: 230 85% 56%;
+    --border: 220 13% 91%;
+    --input: 220 13% 91%;
+    --ring: 38 92% 50%;
 
     --radius: 1rem;
 
-    /* Gradients */
-    --gradient-primary: linear-gradient(135deg, hsl(230 85% 56%), hsl(255 90% 65%));
-    --gradient-hero: radial-gradient(ellipse 80% 50% at 50% -20%, hsl(230 100% 90% / 0.6), transparent),
-                     radial-gradient(ellipse 60% 40% at 80% 30%, hsl(280 100% 90% / 0.4), transparent),
-                     linear-gradient(180deg, hsl(0 0% 100%), hsl(220 30% 98%));
-    --gradient-card: linear-gradient(135deg, hsl(0 0% 100%), hsl(220 30% 99%));
-    --gradient-success: linear-gradient(135deg, hsl(152 70% 45%), hsl(165 75% 45%));
-    --gradient-glow: radial-gradient(circle at center, hsl(230 100% 70% / 0.35), transparent 70%);
+    --gradient-primary: linear-gradient(135deg, hsl(38 92% 50%), hsl(30 92% 45%));
+    --gradient-hero: radial-gradient(ellipse 70% 50% at 20% -20%, hsl(38 92% 50% / 0.16), transparent),
+                     radial-gradient(ellipse 55% 40% at 90% 10%, hsl(173 80% 40% / 0.16), transparent),
+                     linear-gradient(180deg, hsl(0 0% 100%), hsl(210 20% 98%));
+    --gradient-card: linear-gradient(135deg, hsl(210 20% 98%), hsl(0 0% 100%));
+    --gradient-success: linear-gradient(135deg, hsl(173 80% 40%), hsl(168 70% 35%));
+    --gradient-glow: radial-gradient(circle at center, hsl(38 92% 50% / 0.25), transparent 70%);
 
-    /* Shadows */
-    --shadow-sm: 0 1px 2px hsl(220 30% 20% / 0.04);
-    --shadow-md: 0 4px 12px -2px hsl(220 30% 20% / 0.06), 0 2px 4px hsl(220 30% 20% / 0.04);
-    --shadow-lg: 0 20px 40px -12px hsl(220 30% 20% / 0.12), 0 4px 12px hsl(220 30% 20% / 0.04);
-    --shadow-xl: 0 30px 60px -15px hsl(230 50% 30% / 0.18), 0 8px 24px hsl(220 30% 20% / 0.06);
-    --shadow-glow: 0 20px 80px -20px hsl(230 85% 56% / 0.4);
-    --shadow-card: 0 1px 3px hsl(220 30% 20% / 0.04), 0 8px 24px -8px hsl(220 30% 20% / 0.08);
+    --shadow-sm: 0 1px 2px hsl(220 20% 20% / 0.06);
+    --shadow-md: 0 4px 12px -2px hsl(220 20% 20% / 0.10), 0 2px 4px hsl(220 20% 20% / 0.06);
+    --shadow-lg: 0 20px 40px -12px hsl(220 20% 20% / 0.14), 0 4px 12px hsl(220 20% 20% / 0.06);
+    --shadow-xl: 0 30px 60px -15px hsl(220 20% 20% / 0.2), 0 8px 24px hsl(220 20% 20% / 0.08);
+    --shadow-glow: 0 20px 80px -20px hsl(38 92% 50% / 0.28);
+    --shadow-card: 0 1px 3px hsl(220 20% 20% / 0.08), 0 8px 24px -8px hsl(220 20% 20% / 0.1);
 
     --transition-smooth: cubic-bezier(0.22, 1, 0.36, 1);
+    --grid-color: 220 13% 91%;
 
     --sidebar-background: 0 0% 98%;
     --sidebar-foreground: 240 5.3% 26.1%;
@@ -80,25 +85,68 @@
   }
 
   .dark {
-    --background: 224 47% 6%;
-    --foreground: 210 40% 98%;
-    --card: 224 47% 8%;
-    --card-foreground: 210 40% 98%;
-    --popover: 224 47% 8%;
-    --popover-foreground: 210 40% 98%;
-    --primary: 230 90% 65%;
+    --bg: #0d0f14;
+    --card-surface: #1a1d28;
+    --primary-brand: #f59e0b;
+    --ai-accent: #14b8a6;
+    --text-main: #f1f0ec;
+    --text-secondary: #a8a29e;
+    --border-base: #2a2f47;
+
+    --background: 223 21% 6%;
+    --foreground: 48 15% 94%;
+
+    --card: 227 21% 13%;
+    --card-foreground: 48 15% 94%;
+
+    --popover: 227 21% 13%;
+    --popover-foreground: 48 15% 94%;
+
+    --primary: 38 92% 50%;
     --primary-foreground: 0 0% 100%;
-    --secondary: 217 32% 15%;
-    --secondary-foreground: 210 40% 98%;
-    --muted: 217 32% 15%;
-    --muted-foreground: 215 20% 65%;
-    --accent: 217 32% 15%;
-    --accent-foreground: 210 40% 98%;
-    --destructive: 0 62.8% 50%;
-    --destructive-foreground: 210 40% 98%;
-    --border: 217 32% 17%;
-    --input: 217 32% 17%;
-    --ring: 230 90% 65%;
+    --primary-glow: 38 92% 58%;
+
+    --secondary: 227 21% 16%;
+    --secondary-foreground: 48 15% 94%;
+
+    --muted: 227 21% 16%;
+    --muted-foreground: 24 5% 64%;
+
+    --accent: 173 80% 40%;
+    --accent-foreground: 0 0% 100%;
+
+    --success: 173 80% 40%;
+    --success-foreground: 0 0% 100%;
+    --success-soft: 173 40% 18%;
+
+    --warning: 38 92% 50%;
+    --warning-foreground: 0 0% 100%;
+    --warning-soft: 38 55% 20%;
+
+    --destructive: 0 72% 52%;
+    --destructive-foreground: 0 0% 100%;
+    --destructive-soft: 0 45% 20%;
+
+    --border: 230 26% 22%;
+    --input: 230 26% 22%;
+    --ring: 38 92% 50%;
+
+    --gradient-primary: linear-gradient(135deg, hsl(38 92% 50%), hsl(30 92% 45%));
+    --gradient-hero: radial-gradient(ellipse 70% 50% at 20% -20%, hsl(38 92% 50% / 0.20), transparent),
+                     radial-gradient(ellipse 55% 40% at 90% 10%, hsl(173 80% 40% / 0.16), transparent),
+                     linear-gradient(180deg, hsl(223 21% 6%), hsl(227 21% 10%));
+    --gradient-card: linear-gradient(135deg, hsl(227 21% 13%), hsl(227 21% 15%));
+    --gradient-success: linear-gradient(135deg, hsl(173 80% 40%), hsl(168 70% 35%));
+    --gradient-glow: radial-gradient(circle at center, hsl(38 92% 50% / 0.30), transparent 70%);
+
+    --shadow-sm: 0 1px 2px hsl(224 30% 4% / 0.45);
+    --shadow-md: 0 4px 12px -2px hsl(224 30% 4% / 0.5), 0 2px 4px hsl(224 30% 4% / 0.35);
+    --shadow-lg: 0 20px 40px -12px hsl(224 30% 3% / 0.6), 0 4px 12px hsl(224 30% 4% / 0.38);
+    --shadow-xl: 0 30px 60px -15px hsl(224 30% 2% / 0.7), 0 8px 24px hsl(224 30% 4% / 0.4);
+    --shadow-glow: 0 20px 80px -20px hsl(38 92% 50% / 0.45);
+    --shadow-card: 0 1px 3px hsl(224 30% 3% / 0.45), 0 8px 24px -8px hsl(224 30% 4% / 0.55);
+
+    --grid-color: 230 26% 22%;
   }
 }
 
@@ -106,13 +154,16 @@
   * {
     @apply border-border;
   }
+
   html {
     scroll-behavior: smooth;
   }
+
   body {
-    @apply bg-background text-foreground antialiased;
+    @apply bg-background text-foreground antialiased transition-colors duration-300;
     font-feature-settings: "cv11", "ss01", "ss03";
   }
+
   .font-display {
     font-family: 'Sora', 'Inter', sans-serif;
     letter-spacing: -0.02em;
@@ -124,6 +175,7 @@
     @apply bg-clip-text text-transparent;
     background-image: var(--gradient-primary);
   }
+
   .bg-gradient-primary { background-image: var(--gradient-primary); }
   .bg-gradient-hero { background-image: var(--gradient-hero); }
   .bg-gradient-card { background-image: var(--gradient-card); }
@@ -138,11 +190,10 @@
 
   .transition-smooth { transition: all 0.4s var(--transition-smooth); }
 
-  /* Grid pattern background */
   .bg-grid {
     background-image:
-      linear-gradient(to right, hsl(220 30% 90% / 0.4) 1px, transparent 1px),
-      linear-gradient(to bottom, hsl(220 30% 90% / 0.4) 1px, transparent 1px);
+      linear-gradient(to right, hsl(var(--grid-color) / 0.35) 1px, transparent 1px),
+      linear-gradient(to bottom, hsl(var(--grid-color) / 0.35) 1px, transparent 1px);
     background-size: 48px 48px;
     mask-image: radial-gradient(ellipse 60% 50% at 50% 50%, black, transparent);
   }

@@ -1,13 +1,20 @@
-import { useState, FormEvent } from "react";
-import { Link, useNavigate } from "react-router-dom";
+import { useEffect, useState, FormEvent } from "react";
+import { Link, useLocation, useNavigate } from "react-router-dom";
 import { Eye, EyeOff, Loader2, Lock, Mail, User, Check, Shield, Sparkles, ArrowLeft } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Logo } from "@/components/Logo";
 import { cn } from "@/lib/utils";
+import {
+  isAuthenticated,
+  loginWithCredentials,
+} from "@/lib/auth";
 
 type Mode = "login" | "signup";
+
+const getModeFromPathname = (pathname: string): Mode =>
+  pathname === "/signup" ? "signup" : "login";
 
 const FloatingCard = ({
   className,
@@ -47,22 +54,71 @@ const SocialButton = ({
 );
 
 const Auth = () => {
-  const [mode, setMode] = useState<Mode>("login");
+  const location = useLocation();
+  const navigate = useNavigate();
+  const [mode, setMode] = useState<Mode>(() =>
+    getModeFromPathname(location.pathname),
+  );
   const [showPwd, setShowPwd] = useState(false);
   const [loading, setLoading] = useState(false);
   const [success, setSuccess] = useState(false);
   const [shake, setShake] = useState(false);
-  const navigate = useNavigate();
+  const [error, setError] = useState("");
 
   const [form, setForm] = useState({ name: "", email: "", password: "" });
 
+  useEffect(() => {
+    setMode(getModeFromPathname(location.pathname));
+    setSuccess(false);
+    setError("");
+  }, [location.pathname]);
+
+  useEffect(() => {
+    if (isAuthenticated()) {
+      navigate("/", { replace: true });
+    }
+  }, [navigate]);
+
   const handleSubmit = async (e: FormEvent) => {
     e.preventDefault();
-    if (!form.email || !form.password || (mode === "signup" && !form.name)) {
+    if (mode === "login") {
+      const username = form.email.trim();
+      const password = form.password;
+
+      if (!username || !password) {
+        setError("Please fill all fields");
+        setShake(true);
+        setTimeout(() => setShake(false), 500);
+        return;
+      }
+
+      setLoading(true);
+      await new Promise((r) => setTimeout(r, 500));
+      const isValid = loginWithCredentials(username, password);
+      setLoading(false);
+
+      if (!isValid) {
+        setError("Invalid username or password");
+        setSuccess(false);
+        setShake(true);
+        setTimeout(() => setShake(false), 500);
+        return;
+      }
+
+      setError("");
+      setSuccess(true);
+      setTimeout(() => navigate("/", { replace: true }), 600);
+      return;
+    }
+
+    if (!form.email || !form.password || !form.name) {
+      setError("Please complete all required fields");
       setShake(true);
       setTimeout(() => setShake(false), 500);
       return;
     }
+
+    setError("");
     setLoading(true);
     await new Promise((r) => setTimeout(r, 1400));
     setLoading(false);
@@ -236,6 +292,7 @@ const Auth = () => {
                   onClick={() => {
                     setMode(m);
                     setSuccess(false);
+                    setError("");
                   }}
                   className={cn(
                     "relative z-10 py-2.5 rounded-lg transition-colors capitalize",
@@ -296,7 +353,10 @@ const Auth = () => {
                         id="name"
                         placeholder="Priya Sharma"
                         value={form.name}
-                        onChange={(e) => setForm({ ...form, name: e.target.value })}
+                        onChange={(e) => {
+                          setForm({ ...form, name: e.target.value });
+                          setError("");
+                        }}
                         className="pl-9 h-11 rounded-xl focus-visible:ring-primary/40"
                       />
                     </div>
@@ -304,15 +364,18 @@ const Auth = () => {
                 )}
 
                 <div className="space-y-1.5">
-                  <Label htmlFor="email">Email</Label>
+                  <Label htmlFor="email">{mode === "login" ? "Username/Email" : "Email"}</Label>
                   <div className="relative group">
                     <Mail className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-muted-foreground" />
                     <Input
                       id="email"
-                      type="email"
-                      placeholder="you@company.com"
+                      type={mode === "login" ? "text" : "email"}
+                      placeholder={mode === "login" ? "Nishant" : "you@company.com"}
                       value={form.email}
-                      onChange={(e) => setForm({ ...form, email: e.target.value })}
+                      onChange={(e) => {
+                        setForm({ ...form, email: e.target.value });
+                        setError("");
+                      }}
                       className="pl-9 h-11 rounded-xl focus-visible:ring-primary/40"
                     />
                   </div>
@@ -337,7 +400,10 @@ const Auth = () => {
                       type={showPwd ? "text" : "password"}
                       placeholder="••••••••"
                       value={form.password}
-                      onChange={(e) => setForm({ ...form, password: e.target.value })}
+                      onChange={(e) => {
+                        setForm({ ...form, password: e.target.value });
+                        setError("");
+                      }}
                       className="pl-9 pr-10 h-11 rounded-xl focus-visible:ring-primary/40"
                     />
                     <button
@@ -357,6 +423,8 @@ const Auth = () => {
                   </label>
                 )}
 
+                {error && <p className="text-sm text-destructive">{error}</p>}
+
                 <Button
                   type="submit"
                   variant="hero"
@@ -373,7 +441,7 @@ const Auth = () => {
                       <Loader2 className="w-5 h-5 animate-spin" /> Please wait
                     </>
                   ) : mode === "login" ? (
-                    "Login"
+                    "Sign in"
                   ) : (
                     "Create account"
                   )}
@@ -389,7 +457,11 @@ const Auth = () => {
                 {mode === "login" ? "New to Receipt Vault?" : "Already have an account?"}{" "}
                 <button
                   type="button"
-                  onClick={() => setMode(mode === "login" ? "signup" : "login")}
+                  onClick={() => {
+                    setMode(mode === "login" ? "signup" : "login");
+                    setError("");
+                    setSuccess(false);
+                  }}
                   className="font-semibold text-primary hover:underline"
                 >
                   {mode === "login" ? "Create an account" : "Sign in"}
